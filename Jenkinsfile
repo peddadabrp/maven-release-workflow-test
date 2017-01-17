@@ -16,7 +16,7 @@ if (Boolean.valueOf(skipTests)) {
 	      checkout scm
 	      writeFile file: (split.includes ? 'inclusions.txt' : 'exclusions.txt'), text: split.list.join("\n")
 	      writeFile file: (split.includes ? 'exclusions.txt' : 'inclusions.txt'), text: ''
-	      def mvnHome = tool 'M3'
+	      def mvnHome = tool 'M2'
 	      sh "${mvnHome}/bin/mvn -B clean test -Dmaven.test.failure.ignore"
 	      step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/*.xml'])
 	    }
@@ -26,7 +26,7 @@ if (Boolean.valueOf(skipTests)) {
 }
 
 node('dockerSlave') {
-    def mvnHome = tool 'M3'
+    def mvnHome = tool 'M2'
     
     sh "rm -rf *"
     sh "rm -rf .git"
